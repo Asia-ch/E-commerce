@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react"
+import { createContext, useContext, useMemo, useState } from "react"
 import type { Product } from "@/lib/products"
 
 type CartItem = { product: Product; quantity: number; size: string; color: string }
@@ -21,21 +21,6 @@ const ShopContext = createContext<ShopContextValue | null>(null)
 export function ShopProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([])
   const [wishlist, setWishlist] = useState<string[]>([])
-  const [hydrated, setHydrated] = useState(false)
-
-  useEffect(() => {
-    try {
-      setCart(JSON.parse(localStorage.getItem("nove-cart") || "[]"))
-      setWishlist(JSON.parse(localStorage.getItem("nove-wishlist") || "[]"))
-    } catch {}
-    setHydrated(true)
-  }, [])
-
-  useEffect(() => {
-    if (!hydrated) return
-    localStorage.setItem("nove-cart", JSON.stringify(cart))
-    localStorage.setItem("nove-wishlist", JSON.stringify(wishlist))
-  }, [cart, wishlist, hydrated])
 
   const value = useMemo(() => ({
     cart,
