@@ -1,23 +1,23 @@
+import Image from "next/image"
+import Link from "next/link"
+import { ArrowRight, RefreshCw, ShieldCheck, Truck } from "lucide-react"
+import { Footer } from "@/components/store/footer"
+import { Header } from "@/components/store/header"
+import { ProductCard } from "@/components/store/product-card"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { categories, products } from "@/lib/products"
+
 export default function Page() {
-  return (
-    <main className="relative flex min-h-screen items-center justify-center bg-[color:light-dark(#fff,#000)] text-[color:light-dark(#000,#fff)]">
-      <svg
-        aria-hidden="true"
-        className="size-20"
-        fill="none"
-        viewBox="0 0 20 20"
-        xmlns="http://www.w3.org/2000/svg"
-        stroke="currentColor"
-        strokeWidth="0.5"
-      >
-        <path
-          d="M14.2 14.2H17V6.9375C17 4.76288 15.2371 3 13.0625 3H5.8V5.8M14.2 14.2V7.79063L7.79062 14.2H14.2ZM14.2 14.2V17H6.9375C4.76288 17 3 15.2371 3 13.0625V5.8H5.8M5.8 5.8V12.2313L12.2313 5.8H5.8Z"
-          strokeLinejoin="round"
-        />
-      </svg>
-      <p className="absolute left-1/2 top-[calc(50%+56px)] -translate-x-1/2 whitespace-nowrap text-sm font-medium text-muted-foreground">
-        Your v0 generation will show here.
-      </p>
-    </main>
-  )
+  return <><Header/><main>
+    <section className="section-shell py-4 md:py-6"><div className="relative min-h-[72vh] overflow-hidden bg-muted md:min-h-[78vh]"><Image src="/images/hero-fashion.png" alt="Model wearing the NOVE new season collection" fill priority className="object-cover object-center"/><div className="absolute inset-0 bg-foreground/20"/><div className="relative flex min-h-[72vh] flex-col justify-end p-6 text-background md:min-h-[78vh] md:p-12 lg:p-16"><p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em]">Edition 01 / 2026</p><h1 className="max-w-4xl font-serif text-6xl leading-[0.84] tracking-[-0.05em] text-balance sm:text-7xl md:text-8xl lg:text-[8.5rem]">Form follows movement.</h1><div className="mt-7 flex flex-wrap gap-3"><Link href="/shop" className={buttonVariants({ variant: "secondary", size: "lg" })}>Shop new arrivals <ArrowRight data-icon="inline-end"/></Link><Link href="/shop?category=Women" className={buttonVariants({ variant: "outline", size: "lg", className: "border-background/50 bg-background/10 text-background hover:bg-background hover:text-foreground" })}>Explore the edit</Link></div></div></div></section>
+
+    <section className="section-shell py-16 md:py-24"><div className="mb-8 flex items-end justify-between gap-5"><div><p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">New season</p><h2 className="font-serif text-4xl tracking-tight md:text-6xl">Just arrived.</h2></div><Link href="/shop" className="hidden items-center gap-2 text-sm font-medium underline-offset-4 hover:underline sm:flex">View all <ArrowRight className="size-4"/></Link></div><div className="grid grid-cols-2 gap-x-3 gap-y-10 md:grid-cols-4 md:gap-x-5">{products.slice(0,4).map((product) => <ProductCard key={product.id} product={product}/>)}</div><Link href="/shop" className={buttonVariants({ variant: "outline", className: "mt-10 w-full sm:hidden" })}>View all</Link></section>
+
+    <section className="section-shell pb-20 md:pb-28"><div className="mb-8 max-w-2xl"><p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">Shop by world</p><h2 className="font-serif text-4xl tracking-tight md:text-6xl">Designed for now.</h2></div><div className="grid gap-4 md:grid-cols-3">{categories.map((category) => <Link key={category.name} href={`/shop?category=${category.name}`} className="group relative aspect-[4/5] overflow-hidden bg-muted"><Image src={category.image} alt={`${category.name} collection`} fill className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"/><div className="absolute inset-0 bg-foreground/15"/><div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-6 text-background"><div><h3 className="font-serif text-4xl">{category.name}</h3><p className="mt-1 text-sm text-background/80">{category.copy}</p></div><span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-background text-foreground"><ArrowRight className="size-5"/></span></div></Link>)}</div></section>
+
+    <section className="bg-secondary"><div className="section-shell grid items-center gap-10 py-16 md:grid-cols-2 md:py-24"><div className="relative aspect-[4/3] overflow-hidden"><Image src="/images/category-footwear.png" alt="Axis Runner footwear on display" fill className="object-cover"/></div><div className="max-w-xl md:px-10"><p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">NOVE / Movement lab</p><h2 className="font-serif text-5xl leading-none tracking-tight text-balance md:text-7xl">Built to move beyond.</h2><p className="mt-6 text-base leading-relaxed text-muted-foreground">Meet Axis 01, an everyday runner reduced to its essential lines. Responsive underfoot. Quiet in profile. Made for everywhere.</p><Link href="/product/axis-runner-01" className={buttonVariants({ size: "lg", className: "mt-8" })}>Discover Axis 01 <ArrowRight data-icon="inline-end"/></Link></div></div></section>
+
+    <section className="section-shell grid gap-8 py-14 sm:grid-cols-3 md:py-20"><Benefit icon={Truck} title="Complimentary delivery" text="Free standard shipping over $150."/><Benefit icon={RefreshCw} title="Considered returns" text="30 days to find the right fit."/><Benefit icon={ShieldCheck} title="Secure checkout" text="Your information stays protected."/></section>
+  </main><Footer/></>
 }
+function Benefit({ icon: Icon, title, text }: { icon: typeof Truck; title: string; text: string }) { return <div className="flex items-start gap-4 border-t pt-5"><Icon className="size-5 shrink-0"/><div><h3 className="text-sm font-semibold">{title}</h3><p className="mt-1 text-sm text-muted-foreground">{text}</p></div></div> }

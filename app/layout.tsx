@@ -1,10 +1,15 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
+import { Geist, Cormorant_Garamond } from 'next/font/google'
+import { ShopProvider } from '@/components/store/shop-provider'
 import './globals.css'
 
+const geist = Geist({ subsets: ['latin'], variable: '--font-geist' })
+const cormorant = Cormorant_Garamond({ subsets: ['latin'], weight: ['500', '600'], variable: '--font-cormorant' })
+
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: { default: 'NOVE — Modern essentials', template: '%s — NOVE' },
+  description: 'A considered collection of modern fashion, footwear, and everyday essentials.',
   generator: 'v0.app',
   icons: {
     icon: [
@@ -26,11 +31,8 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'light dark',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' },
-  ],
+  colorScheme: 'light',
+  themeColor: '#f7f5f0',
 }
 
 export default function RootLayout({
@@ -39,9 +41,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased">
-        {children}
+    <html lang="en" className="bg-background">
+      <body className={`${geist.variable} ${cormorant.variable} font-sans antialiased`}>
+        <ShopProvider>{children}</ShopProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
